@@ -1,11 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GUIScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\AsteroidMovement.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameManager.cs" Line="22" Column="4" />
-      <File FileName="Assets\Scripts\AsteroidMovement.cs" Line="24" Column="38" />
-      <File FileName="Assets\Scripts\ShipMovement.cs" Line="17" Column="1" />
-      <File FileName="Assets\Scripts\GUIScript.cs" Line="21" Column="1" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="49" Column="34" />
+      <File FileName="Assets\Scripts\AsteroidMovement.cs" Line="29" Column="4" />
+      <File FileName="Assets\Scripts\ShipCondition.cs" Line="32" Column="31" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
