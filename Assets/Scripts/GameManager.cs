@@ -15,14 +15,18 @@ public class GameManager : MonoBehaviour {
 
 	private int currentAstSpeed;
 	private int highestAstSpeed;
+	private int currentDist = 0;
 
 	public bool gameFinished = false;
+
+
 
 	// Use this for initialization
 	void Start () {
 		currentAstSpeed = StartingAsteroidSpeed;
 		highestAstSpeed = currentAstSpeed;
 		StartCoroutine("SpawnAsteroid");
+		StartCoroutine("CalculateDistance");
 	}
 
 	void FixedUpdate(){
@@ -33,7 +37,12 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 	}
-
+	IEnumerator CalculateDistance(){
+		while(!gameFinished){
+			currentDist += currentAstSpeed/10;
+			yield return new WaitForSeconds(0.1f);
+		}
+	}
 	IEnumerator SpawnAsteroid(){
 		while(!gameFinished){
 			GameObject newAsteroid = Instantiate(Asteroid, 
@@ -51,6 +60,9 @@ public class GameManager : MonoBehaviour {
 	}
 	public int GetHighestAstSpeed(){
 		return highestAstSpeed;
+	}
+	public int GetCurrentDist(){
+		return currentDist;
 	}
 	public void ReduceCurrentSpeed(int amount){
 		// Reduces as a percentage, minus 1000 base speed
