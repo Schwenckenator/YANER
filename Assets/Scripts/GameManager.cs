@@ -3,6 +3,9 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 	public GameObject Asteroid;
+
+	public GameObject ShieldRestore;
+
 	public int StartingAsteroidSpeed;
 	public float AsteroidSpawnPosition; // How far back asteroids spawn
 	public float AsteroidHorizontalSpawnPosition; // How far either side the asteroids can spawn
@@ -19,7 +22,8 @@ public class GameManager : MonoBehaviour {
 
 	public bool gameFinished = false;
 
-
+	public float ShieldRestoreCooldown;
+	public int ShieldRestoreChance;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +31,8 @@ public class GameManager : MonoBehaviour {
 		highestAstSpeed = currentAstSpeed;
 		StartCoroutine("SpawnAsteroid");
 		StartCoroutine("CalculateDistance");
+		StartCoroutine("SpawnBonus");
+
 	}
 
 	void FixedUpdate(){
@@ -36,6 +42,10 @@ public class GameManager : MonoBehaviour {
 				highestAstSpeed = currentAstSpeed;
 			}
 		}
+	}
+	private bool DiceRoll(int SuccessPercent){
+		int roll = Random.Range(0,99);
+		return (roll < SuccessPercent);
 	}
 	IEnumerator CalculateDistance(){
 		while(!gameFinished){
@@ -55,6 +65,15 @@ public class GameManager : MonoBehaviour {
 			yield return new WaitForSeconds(Random.Range(minTime/(float)currentAstSpeed, maxTime/(float)currentAstSpeed));
 		}
 	}
+	IEnumerator SpawnBonus(){
+		while(!gameFinished){
+			if(DiceRoll(ShieldRestoreChance)){
+				Instantiate(ShieldRestore, new Vector3(Random.Range (-AsteroidHorizontalSpawnPosition,AsteroidHorizontalSpawnPosition),
+				                                       0, AsteroidSpawnPosition), new Quaternion());
+			}
+			yield return new WaitForSeconds(5);
+		}
+	}
 	public int GetCurrentAstSpeed(){
 		return currentAstSpeed;
 	}
@@ -66,7 +85,7 @@ public class GameManager : MonoBehaviour {
 	}
 	public void ReduceCurrentSpeed(int amount){
 		// Reduces as a percentage, minus 1000 base speed
-		int extraSpeed = currentAstSpeed - 1000;
+		int extraSpeed = currentAstSpeed - StartingAsteroidSpeed;
 		int speedReduction = Mathf.RoundToInt(extraSpeed * (amount)*0.01f);
 		currentAstSpeed -= speedReduction;
 	}

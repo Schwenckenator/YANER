@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AsteroidMovement : MonoBehaviour {
+public class ObjectMovement : MonoBehaviour {
+	public string type;
 	GameManager manager;
 	ShipCondition playerShip;
 	// Use this for initialization
@@ -23,10 +24,17 @@ public class AsteroidMovement : MonoBehaviour {
 		}
 	}
 	void OnTriggerEnter(Collider col){
-		if(col.CompareTag("PlayerShip")){
-			manager.ReduceCurrentSpeed(25); // Percentage reduction here
-			playerShip.TakeDamage(1); // For now, each asteroid deals 1 damage
+		if(type == "Asteroid"){
+			if(col.CompareTag("PlayerShip")){
+				manager.ReduceCurrentSpeed(25); // Percentage reduction here
+				playerShip.TakeDamage(1); // For now, each asteroid deals 1 damage
+			}
+		}else if(type == "Shield"){
+			if(col.CompareTag("PlayerShip")){
+				playerShip.RestoreShield();
+			}
 		}
+
 		if(!col.CompareTag("Box")){
 			Debug.Log (col.tag);
 			Destroy (gameObject);

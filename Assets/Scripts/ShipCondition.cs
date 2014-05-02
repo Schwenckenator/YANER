@@ -20,7 +20,18 @@ public class ShipCondition : MonoBehaviour {
 	void Update () {
 	
 	}
-	public void TakeDamage(int dam){
+	public int GetCurrentShield(){
+		return curShipShield;
+	}
+	public void SetCurrentShield(int newShield){
+		curShipShield = newShield;
+	}
+
+	public void RestoreShield(){ // Sets value to maximum
+		curShipShield = maxShipShield;
+	}
+
+	public void TakeDamage(int dam){ //Takes damage to shield/hull
 		if(curShipShield > 0){
 			curShipShield -= dam;
 		}else{
@@ -28,9 +39,7 @@ public class ShipCondition : MonoBehaviour {
 		}
 		CheckShipValues();
 	}
-	public void RemoveShield(int lostShield){
-		curShipShield -= lostShield;
-	}
+
 	private void CheckShipValues(){
 		if(curShipShield < 0){
 			curShipHull += curShipShield;
@@ -40,4 +49,5 @@ public class ShipCondition : MonoBehaviour {
 			manager.gameFinished = true;
 		}
 	}
+
 }

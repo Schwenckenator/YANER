@@ -46,9 +46,10 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\AsteroidMovement.cs" />
      <Compile Include="Assets\Scripts\GUIScript.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\MenuScript.cs" />
+     <Compile Include="Assets\Scripts\ObjectMovement.cs" />
      <Compile Include="Assets\Scripts\ShipCondition.cs" />
      <Compile Include="Assets\Scripts\ShipMovement.cs" />
   </ItemGroup>

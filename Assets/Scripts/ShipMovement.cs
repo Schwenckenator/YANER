@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ShipMovement : MonoBehaviour {
 	public float horSpeed;
+	public float slowCoEfficient;
 	float distCovered;
 	float journeyLength;
 
@@ -10,7 +11,7 @@ public class ShipMovement : MonoBehaviour {
 	void FixedUpdate () {
 		rigidbody.AddForce (new Vector3(Input.GetAxis("Horizontal") * horSpeed, 0, 0),ForceMode.Acceleration);
 		if(Input.GetAxisRaw("Horizontal") == 0 && rigidbody.velocity != Vector3.zero) {
-			rigidbody.velocity = rigidbody.velocity*0.75f;
+			rigidbody.velocity = rigidbody.velocity*slowCoEfficient;
 		}
 	}
 }
