@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
@@ -21,19 +21,80 @@ public class GameManager : MonoBehaviour {
 	private int currentDist = 0;
 
 	public bool gameFinished = false;
+	//bool for level complete/failed
+	public bool gameFailed = false;
+	
+	ShipCondition playerShip;
 
 	public float ShieldRestoreCooldown;
 	public int ShieldRestoreChance;
+	
+	public static int NumberOfLevels = 5;
+	private int CurrentLevel = -99;
+	//distance for each level
+	public int[] EndLevelAtDistance;
+	//speed goal of each level (can be changed to time)
+	public int[] TargetSpeed;
 
 	// Use this for initialization
-	void Start () {
+	void Start() {
+		EndLevelAtDistance = new int[NumberOfLevels + 1];
+		for (int i = 1; i <= NumberOfLevels; i++){
+			EndLevelAtDistance[i] = i*50000;
+		}
+		TargetSpeed = new int[NumberOfLevels + 1];
+		for (int i = 1; i <= NumberOfLevels; i++){
+			TargetSpeed[i] = i*250 + 2750;
+		}
+		playerShip = GameObject.FindGameObjectWithTag("PlayerShip").GetComponent<ShipCondition>();
 		currentAstSpeed = StartingAsteroidSpeed;
 		highestAstSpeed = currentAstSpeed;
+		//First level only accessible from menu, levels play in order after that
+		//levels can be skipped in the menu
+		CurrentLevel = PlayerPrefs.GetInt("Level");
+		if (CurrentLevel < 0) {
+			CurrentLevel = 0;
+		}
 		StartCoroutine("SpawnAsteroid");
 		StartCoroutine("CalculateDistance");
 		StartCoroutine("SpawnBonus");
 
 	}
+	
+	public void Restart(){//restart level
+		gameFinished = false;
+		gameFailed = false;
+		currentAstSpeed = StartingAsteroidSpeed;
+		highestAstSpeed = currentAstSpeed;
+		currentDist = 0;
+		StartCoroutine("SpawnAsteroid");
+		StartCoroutine("CalculateDistance");
+		StartCoroutine("SpawnBonus");
+		playerShip.RestoreShield();
+		playerShip.RestoreHull();
+	}
+	
+	//let other scripts get level number
+	public int GetCurrentLevel(){
+		return CurrentLevel;
+	}
+	public int GetMaxSpeed(){
+		return highestAstSpeed;
+	}
+	public int GetLevelTargetSpeed(){
+		return TargetSpeed[CurrentLevel];
+	}
+	public int GetMaxLevel(){
+		return NumberOfLevels;
+	}
+	//update level number and restart scene
+	public void NextLevel(){
+		CurrentLevel += 1;
+		PlayerPrefs.SetInt("Level",CurrentLevel);
+		Restart();
+	}
+	
+	
 
 	void FixedUpdate(){
 		if(!gameFinished){
@@ -48,8 +109,13 @@ public class GameManager : MonoBehaviour {
 		return (roll < SuccessPercent);
 	}
 	IEnumerator CalculateDistance(){
-		while(!gameFinished){
+		//stops cycling on level finish instead of game over
+		while(currentDist < EndLevelAtDistance[CurrentLevel]){
 			currentDist += currentAstSpeed/10;
+			//checks if player has travelled required distance
+			if(currentDist >= EndLevelAtDistance[CurrentLevel]){
+				gameFinished = true;
+			}
 			yield return new WaitForSeconds(0.1f);
 		}
 	}
