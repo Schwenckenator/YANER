@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ShipCondition : MonoBehaviour {
@@ -30,14 +30,20 @@ public class ShipCondition : MonoBehaviour {
 	public void RestoreShield(){ // Sets value to maximum
 		curShipShield = maxShipShield;
 	}
+	
+	public void RestoreHull(){ // Sets value to maximum
+		curShipHull = maxShipHull;
+	}
 
 	public void TakeDamage(int dam){ //Takes damage to shield/hull
-		if(curShipShield > 0){
-			curShipShield -= dam;
-		}else{
-			curShipHull -= dam;
+		if(manager.gameFinished == false){//only works while game active
+			if(curShipShield > 0){
+				curShipShield -= dam;
+			}else{
+				curShipHull -= dam;
+			}
+			CheckShipValues();
 		}
-		CheckShipValues();
 	}
 
 	private void CheckShipValues(){
@@ -46,6 +52,7 @@ public class ShipCondition : MonoBehaviour {
 		}
 		if(curShipHull <= 0){
 			//You lose
+			manager.gameFailed = true;
 			manager.gameFinished = true;
 		}
 	}
