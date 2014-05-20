@@ -7,6 +7,8 @@ public class ShipCondition : MonoBehaviour {
 
 	private int curShipShield;
 	private int curShipHull;
+	
+	public int hits;
 
 	private GameManager manager;
 	// Use this for initialization
@@ -42,8 +44,16 @@ public class ShipCondition : MonoBehaviour {
 			}else{
 				curShipHull -= dam;
 			}
+			hits += 1;
 			CheckShipValues();
 		}
+	}
+	
+	public int GetShipHits(){
+		return hits;
+	}
+	public void ResetShipHits(){
+		hits = 0;
 	}
 
 	private void CheckShipValues(){
