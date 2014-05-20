@@ -14,7 +14,7 @@ public class GUIScript : MonoBehaviour {
 		condition = GameObject.FindGameObjectWithTag("PlayerShip").GetComponent<ShipCondition>();
 	}
 	void OnGUI(){
-		GUI.Box(new Rect(10,10,200, 300), "");
+		GUI.Box(new Rect(10,10,200, 370), "");
 		GUI.Label (new Rect(20, 20, 180, 20), "Current Speed:");
 		GUI.Label (new Rect(20, 50, 180, 20), manager.GetCurrentAstSpeed().ToString());
 		GUI.Label (new Rect(20, 80, 180, 20), "Highest Speed:");
@@ -23,8 +23,10 @@ public class GUIScript : MonoBehaviour {
 		GUI.Label (new Rect(20, 170, 180, 20), manager.GetCurrentDist().ToString());
 		GUI.Label (new Rect(20, 200, 180, 20), "Shields:");
 		GUI.Label (new Rect(20, 230, 180, 20), condition.GetCurrentShield().ToString());
-		GUI.Label (new Rect(20, 260, 180, 20), "Current Level:");
-		GUI.Label (new Rect(20, 290, 180, 20), manager.GetCurrentLevel().ToString());
+		GUI.Label (new Rect(20, 260, 180, 20), "Collisions:");
+		GUI.Label (new Rect(20, 290, 180, 20), condition.GetShipHits().ToString());
+		GUI.Label (new Rect(20, 320, 180, 20), "Current Level:");
+		GUI.Label (new Rect(20, 350, 180, 20), manager.GetCurrentLevel().ToString());
 
 		//changed to gamefailed so there can also be GUI for complete level
 		if(manager.gameFailed){
@@ -41,6 +43,7 @@ public class GUIScript : MonoBehaviour {
 		}
 		// Restart current level
 		if(GUI.Button(new Rect(140, 20, 100, 20), "Retry Level")){
+			condition.ResetShipHits();
 			manager.Restart();
 		}
 	}
@@ -52,11 +55,16 @@ public class GUIScript : MonoBehaviour {
 		//play next level (just restarts scene but increases current level value
 		if(manager.GetCurrentLevel() < manager.GetMaxLevel()){
 			if(GUI.Button(new Rect(140, 20, 100, 20), "Next Level")){
+				condition.ResetShipHits();
 				manager.NextLevel();
 			}
 		}
 		if (manager.GetMaxSpeed () >= manager.GetLevelTargetSpeed ()) {
 			if (GUI.Button (new Rect (260, 20, 100, 20), "Speed Bonus!")) {
+			}
+		}
+		if (condition.GetShipHits() < 1) {
+			if (GUI.Button (new Rect (375, 20, 105, 20), "Evasion Bonus!")) {
 			}
 		}
 	}
