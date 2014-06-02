@@ -14,19 +14,21 @@ public class GUIScript : MonoBehaviour {
 		condition = GameObject.FindGameObjectWithTag("PlayerShip").GetComponent<ShipCondition>();
 	}
 	void OnGUI(){
-		GUI.Box(new Rect(10,10,200, 370), "");
+		GUI.Box(new Rect(10,10,200, 430), "");
 		GUI.Label (new Rect(20, 20, 180, 20), "Current Speed:");
 		GUI.Label (new Rect(20, 50, 180, 20), manager.GetCurrentAstSpeed().ToString());
 		GUI.Label (new Rect(20, 80, 180, 20), "Highest Speed:");
 		GUI.Label (new Rect(20, 110, 180, 20), manager.GetHighestAstSpeed().ToString());
 		GUI.Label (new Rect(20, 140, 180, 20), "Current Distance:");
 		GUI.Label (new Rect(20, 170, 180, 20), manager.GetCurrentDist().ToString());
-		GUI.Label (new Rect(20, 200, 180, 20), "Shields:");
-		GUI.Label (new Rect(20, 230, 180, 20), condition.GetCurrentShield().ToString());
-		GUI.Label (new Rect(20, 260, 180, 20), "Collisions:");
-		GUI.Label (new Rect(20, 290, 180, 20), condition.GetShipHits().ToString());
-		GUI.Label (new Rect(20, 320, 180, 20), "Current Level:");
-		GUI.Label (new Rect(20, 350, 180, 20), manager.GetCurrentLevel().ToString());
+		GUI.Label (new Rect(20, 200, 180, 20), "Time:");
+		GUI.Label (new Rect(20, 230, 180, 20), manager.GetCurrentTime().ToString("0.00"));
+		GUI.Label (new Rect(20, 260, 180, 20), "Shields:");
+		GUI.Label (new Rect(20, 290, 180, 20), condition.GetCurrentShield().ToString());
+		GUI.Label (new Rect(20, 320, 180, 20), "Collisions:");
+		GUI.Label (new Rect(20, 350, 180, 20), condition.GetShipHits().ToString());
+		GUI.Label (new Rect(20, 380, 180, 20), "Current Level:");
+		GUI.Label (new Rect(20, 410, 180, 20), manager.GetCurrentLevel().ToString());
 
 		//changed to gamefailed so there can also be GUI for complete level
 		if(manager.gameFailed){
@@ -59,8 +61,8 @@ public class GUIScript : MonoBehaviour {
 				manager.NextLevel();
 			}
 		}
-		if (manager.GetMaxSpeed () >= manager.GetLevelTargetSpeed ()) {
-			if (GUI.Button (new Rect (260, 20, 100, 20), "Speed Bonus!")) {
+		if (manager.GetCurrentTime() <= manager.GetLevelTargetTime ()) {
+			if (GUI.Button (new Rect (260, 20, 100, 20), "Time Bonus!")) {
 			}
 		}
 		if (condition.GetShipHits() < 1) {
