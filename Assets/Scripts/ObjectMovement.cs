@@ -11,7 +11,7 @@ public class ObjectMovement : MonoBehaviour {
 		playerShip = GameObject.FindGameObjectWithTag("PlayerShip").GetComponent<ShipCondition>();
 
 		Vector3 newForce = new Vector3(0, 0, -1 * manager.GetCurrentAstSpeed());
-		rigidbody.AddForce(newForce);
+		GetComponent<Rigidbody>().AddForce(newForce);
 		StartCoroutine("CheckForDeath");
 	}
 

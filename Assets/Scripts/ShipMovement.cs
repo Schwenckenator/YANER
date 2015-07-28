@@ -9,9 +9,9 @@ public class ShipMovement : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		rigidbody.AddForce (new Vector3(Input.GetAxis("Horizontal") * horSpeed, 0, 0),ForceMode.Acceleration);
-		if(Input.GetAxisRaw("Horizontal") == 0 && rigidbody.velocity != Vector3.zero) {
-			rigidbody.velocity = rigidbody.velocity*slowCoEfficient;
+		GetComponent<Rigidbody>().AddForce (new Vector3(Input.GetAxis("Horizontal") * horSpeed, 0, 0),ForceMode.Acceleration);
+		if(Input.GetAxisRaw("Horizontal") == 0 && GetComponent<Rigidbody>().velocity != Vector3.zero) {
+			GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity*slowCoEfficient;
 		}
 	}
 }
