@@ -15,23 +15,23 @@ public class MenuScript : MonoBehaviour {
 		if(GUI.Button(new Rect(20, 20, 100, 20), "Continue Game")){
 			Application.LoadLevel("Test Scene");
 		}
-		if(GUI.Button(new Rect(140, 20, 100, 20), "Play Level 1")){
+		if(GUI.Button(new Rect(20, 50, 95, 20), "Play Level 1")){
 			PlayerPrefs.SetInt("Level",1);
 			Application.LoadLevel("Test Scene");
 		}
-		if(GUI.Button(new Rect(260, 20, 100, 20), "Play Level 2")){
+		if(GUI.Button(new Rect(130, 50, 95, 20), "Play Level 2")){
 			PlayerPrefs.SetInt("Level",2);
 			Application.LoadLevel("Test Scene");
 		}
-		if(GUI.Button(new Rect(380, 20, 100, 20), "Play Level 3")){
+		if(GUI.Button(new Rect(240, 50, 95, 20), "Play Level 3")){
 			PlayerPrefs.SetInt("Level",3);
 			Application.LoadLevel("Test Scene");
 		}
-		if(GUI.Button(new Rect(500, 20, 100, 20), "Play Level 4")){
+		if(GUI.Button(new Rect(350, 50, 95, 20), "Play Level 4")){
 			PlayerPrefs.SetInt("Level",4);
 			Application.LoadLevel("Test Scene");
 		}
-		if(GUI.Button(new Rect(620, 20, 100, 20), "Play Level 5")){
+		if(GUI.Button(new Rect(460, 50, 95, 20), "Play Level 5")){
 			PlayerPrefs.SetInt("Level",5);
 			Application.LoadLevel("Test Scene");
 		}
